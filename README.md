@@ -97,6 +97,12 @@ Each Release ships a **Vendor Bundle ZIP** that contains:
 * Portable EXE (`dist/Mega_OCR.exe`) and the Vendor Bundle ZIP are available on the GitHub [Releases page](../../releases).
 * The Vendor Bundle ZIP includes `MANIFEST.json` and `SHA256SUMS.txt` at the root for integrity verification.
 
+> **Verify EXE checksum (optional):**
+>
+> ```powershell
+> Get-FileHash -Algorithm SHA256 dist\Mega_OCR.exe
+> ```
+
 ---
 
 ## Platform Support
@@ -123,6 +129,10 @@ MegaOCR/
   Mega_OCR.py
   Mega_OCR.spec
   /scripts
+    build.ps1
+    generate-manifest.ps1
+  /docs
+    User Interface.gif
   README.md
   LICENSE
   THIRD_PARTY_NOTICES.md
@@ -174,4 +184,4 @@ All detailed license texts are included in the **Vendor Bundle ZIP**.
 
 * MegaOCR code: MIT (see [`LICENSE`](./LICENSE))
 * Tesseract & models: Apache-2.0 (see [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md))
-* Fonts: OFL and CC BY 4.0 (included in the Vendor Bundle)"# MegaOCR" 
+* Fonts: OFL and CC BY 4.0 (included in the Vendor Bundle)
