@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenv
+.venv/
+venv/
+
+# Build artifacts
+/dist/
+/build/
+*.spec
+
+# Local vendor bundle (do not commit)
+vendor/
+
+# OS junk
+.DS_Store
+Thumbs.db
