@@ -13,7 +13,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ---
 
-## [v1.0.0] - 2025-09-18
+## [v0.1.0] - 2025-09-20
 ### Added
 - First stable release of **MegaOCR**.
 - Portable Windows EXE with no Python/Tesseract install required.
@@ -24,4 +24,4 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Added `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `THIRD_PARTY_NOTICES.md`.
 
 [Unreleased]: ../../compare/v0.1.0...HEAD
-[v1.0.0]: ../../releases/tag/v0.1.0
+[v0.1.0]: ../../releases/tag/v0.1.0
