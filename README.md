@@ -6,40 +6,42 @@
 
 ![MegaOCR UI](docs/User%20Interface.gif)
 
-**MegaOCR** is a portable, multi-language OCR GUI for Windows, built on Tesseract.  
-It reads **PDF / PNG / JPG** and exports to **.txt / .docx / .pdf**.
+**MegaOCR** is a **portable OCR application for Windows** powered by [Tesseract OCR](https://github.com/tesseract-ocr/tesseract).  
+It can read **PDF / PNG / JPG** and export extracted text to **.txt / .docx / .pdf**.
 
-👉 [Download Latest Release](../../releases/latest)
-
----
-
-## Features
-- 120+ languages (any Tesseract `traineddata`; the Vendor Bundle includes curated models).
-- Fully portable on Windows: no Python or Tesseract install required when using the Release binary.
-- Clean Tkinter UI (ttkbootstrap).
-- Outputs: `.txt`, `.docx`, `.pdf`.
-
-## Limitations
-- Lower accuracy on low-DPI / low-quality images.
-- Complex / messy layouts may reduce accuracy.
-- Note: ReportLab alone does not fully handle complex RTL shaping (e.g., Persian/Arabic).
+👉 [Download Latest Portable EXE](../../releases/latest) — *no installation required, just run and use.*
 
 ---
 
-## Run from Source
+## For Users
+
+### Features
+- Works out of the box on Windows — **no Python, no Tesseract installation required**.
+- Supports **120+ languages** (common models already bundled in the Release).
+- Exports to multiple formats: `.txt`, `.docx`, `.pdf`.
+- Clean and simple interface built with Tkinter (using `ttkbootstrap`).
+
+### Limitations
+- OCR accuracy depends on input quality (high-DPI recommended).
+- Complex page layouts may reduce accuracy.
+- Current PDF export has **limited RTL shaping** (Persian/Arabic). Use `.docx` or `.txt` for best results.
+
+---
+
+## For Developers
+
+### Run from Source
 
 ```bash
+git clone https://github.com/Megahertz418/MegaOCR.git
+cd MegaOCR
 pip install -r requirements.txt
 python Mega_OCR.py
 ````
 
-> If you use non-default languages, ensure the related Tesseract `traineddata` files are available on your system.
+> Make sure Tesseract `traineddata` files for your target languages are available.
 
----
-
-## Build (Windows, PyInstaller)
-
-This project’s portable binary is built with (Windows **CMD** syntax):
+### Build (Windows, PyInstaller)
 
 ```bat
 pyinstaller --onefile --noconsole ^
@@ -51,119 +53,107 @@ pyinstaller --onefile --noconsole ^
   --icon=mega_ocr.ico Mega_OCR.py
 ```
 
-The output binary will appear at `dist/Mega_OCR.exe`.
+The executable will appear at `dist/Mega_OCR.exe`.
 
-> **PowerShell note:** Replace `^` line continuations with backticks `` ` `` or put the command on a single line.
-
-If you extracted the Vendor Bundle (see below) to `vendor/`, copy the files from `vendor/` next to the project root **before** running the command above (or use `scripts/build.ps1`).
-
-> **Build script note:** The provided `scripts/build.ps1` automatically tells PyInstaller to use all required files directly from the `vendor/` folder (no extra files are copied to the project root).
-
-> **Icon note:** The build uses `mega_ocr.ico` from the Vendor Bundle (`vendor/mega_ocr.ico`). Make sure the Vendor Bundle is extracted to `vendor/` before building.
-
----
-
-## Vendor Bundle (Reproducible Builds)
-
-Each Release ships a **Vendor Bundle ZIP** that contains:
-
-* `tesseract.exe` + required `*.dll`
-* curated `tessdata/` (including improved models)
-* `fonts/`
-* `mega_ocr.ico` and `mega_ocr.png`
-* all third-party licenses
-* `MANIFEST.json` (components, origin, license, SHA256)
-* `SHA256SUMS.txt`
-
-📦 Available on the [Releases page](../../releases).
-
-### Rebuild exactly like the Release
-
-1. Clone this repository.
-2. Download the matching Vendor Bundle zip from the Release page and extract it to `vendor/` at the repo root.
-3. Either:
-
-   * Run the PyInstaller command above **after copying** vendor files next to the project root, **or**
-   * Run the helper script:
-
-   ```powershell
-   scripts\build.ps1 -VendorDir .\vendor
-   ```
-
----
-
-## Releases
-
-* Portable EXE (`dist/Mega_OCR.exe`) and the Vendor Bundle ZIP are available on the GitHub [Releases page](../../releases).
-* The Vendor Bundle ZIP includes `MANIFEST.json` and `SHA256SUMS.txt` at the root for integrity verification.
-
-> **Verify EXE checksum (optional):**
+> **Tip:** Use the helper script for clean builds:
 >
 > ```powershell
-> Get-FileHash -Algorithm SHA256 dist\Mega_OCR.exe
+> scripts\build.ps1 -VendorDir .\vendor
 > ```
 
 ---
 
-## Platform Support
+## Vendor Bundle (for Reproducible Builds)
 
-* Windows 10/11 x64: ✅ (Portable EXE)
-* macOS / Linux: ⏳ (planned)
+Each Release ships a **Vendor Bundle ZIP**, which includes:
+
+* `tesseract.exe` + required `*.dll`
+* curated `tessdata/` models
+* `fonts/`
+* `mega_ocr.ico` and `mega_ocr.png`
+* all third-party licenses
+* `MANIFEST.json` (components + SHA256 hashes)
+* `SHA256SUMS.txt`
+
+📥 Available on the [Releases page](../../releases).
+
+> **Note:** End-users **don’t need this ZIP**. It is only for developers who want to reproduce the official Release build.
 
 ---
 
-## Troubleshooting
 
-* **Nothing detected / empty output:** Try higher-DPI input, or ensure correct language(s) are selected (e.g., `eng+fas`).
-* **Persian/Arabic shaping in PDF:** Current PDF export via ReportLab has limited RTL shaping; use `.txt`/`.docx` for best quality.
-* **Antivirus false-positive:** PyInstaller-packed EXEs can be flagged by some AVs. Verify checksums with `SHA256SUMS.txt`.
-
-> If problems persist, please [open an Issue](../../issues).
-
----
 
 ## Project Layout (source repo)
 
 ```text
 MegaOCR/
-  Mega_OCR.py
-  Mega_OCR.spec
-  /scripts
-    build.ps1
-    generate-manifest.ps1
-  /docs
-    User Interface.gif
-  README.md
-  LICENSE
-  THIRD_PARTY_NOTICES.md
-  CHANGELOG.md
-  CONTRIBUTING.md
-  SECURITY.md
-  requirements.txt
+│   .gitignore
+│   CHANGELOG.md
+│   CONTRIBUTING.md
+│   LICENSE
+│   Mega_OCR.py
+│   Mega_OCR.spec
+│   README.md
+│   requirements.txt
+│   SECURITY.md
+│   THIRD_PARTY_NOTICES.md
+│
+├── .github/               # GitHub-specific configs (PR/Issue templates)
+│   │   pull_request_template.md
+│   └── ISSUE_TEMPLATE/
+│           bug_report.md
+│           feature_request.md
+│
+├── docs/                  # Documentation & media (UI preview, etc.)
+│       User Interface.gif
+│
+└── scripts/               # Build & manifest generation helpers
+        build.ps1
+        generate-manifest.ps1
 ```
 
-> In the source repository, `dist/`, `build/`, and `vendor/` are excluded via `.gitignore`.
+> Note: `vendor/`, `dist/`, and `build/` directories are not committed to the repo.
+> They are provided as part of the downloadable **Release assets** (Vendor Bundle ZIP & EXE).
+
+---
+
+## Releases
+
+* Portable EXE (`Mega_OCR.exe`) — recommended for most users.
+* Vendor Bundle ZIP — for developers who want reproducible builds.
+
+Both are available on the [Releases page](../../releases).
+
+---
+
+## Troubleshooting
+
+* **Empty OCR output:** Try higher-resolution images or check language settings (e.g., `eng+fas`).
+* **Persian/Arabic shaping in PDF:** Use `.docx` or `.txt` instead.
+* **Antivirus false positive:** PyInstaller executables are sometimes flagged. Verify integrity with SHA256 checksums in the Vendor Bundle.
+
+> Still stuck? Please [open an Issue](../../issues).
 
 ---
 
 ## Roadmap
 
 * macOS/Linux support
-* Better layout handling for complex documents
+* Better complex-layout handling
 * Optional CLI mode
-* Proper RTL shaping in PDF output
+* Improved RTL shaping in PDF exports
 
 ---
 
 ## Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md).
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ---
 
 ## Security
 
-If you discover a security vulnerability, please report it responsibly via the process described in [SECURITY.md](./SECURITY.md).
+If you discover a security issue, please follow the process in [SECURITY.md](./SECURITY.md).
 
 ---
 
@@ -175,13 +165,13 @@ See [CHANGELOG.md](./CHANGELOG.md) for version history.
 
 ## Third-Party Notices
 
-See [THIRD\_PARTY\_NOTICES.md](./THIRD_PARTY_NOTICES.md) for bundled components and license references.
-All detailed license texts are included in the **Vendor Bundle ZIP**.
+See [THIRD\_PARTY\_NOTICES.md](./THIRD_PARTY_NOTICES.md) for a list of included components.
+Detailed license texts are provided in the **Vendor Bundle ZIP**.
 
 ---
 
 ## License
 
-* MegaOCR code: MIT (see [`LICENSE`](./LICENSE))
-* Tesseract & models: Apache-2.0 (see [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md))
-* Fonts: OFL and CC BY 4.0 (included in the Vendor Bundle)
+* MegaOCR code: [MIT](./LICENSE)
+* Tesseract & models: Apache-2.0 (see [THIRD\_PARTY\_NOTICES.md](./THIRD_PARTY_NOTICES.md))
+* Fonts: OFL and CC BY 4.0 (see Vendor Bundle)
